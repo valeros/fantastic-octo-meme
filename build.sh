@@ -167,4 +167,13 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "dfu-util downloaded, dependencies installed, dfu-util built, installed, and patched successfully!"
+
+echo "Library dependencies:"
+ldd $DFU_UTIL_BIN
+
+echo "Prepared files:"
+ls -alR $INSTALL_PATH
+
 echo "All files have been packed into $ARCHIVE_NAME."
+
+ls -al
