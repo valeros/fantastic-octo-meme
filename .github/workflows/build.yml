@@ -10,7 +10,7 @@ jobs:
         id: build_image
         with:
           cpu: cortex-a53
-          base_image: raspios_lite_arm64:2022-01-28
+          base_image: raspios_lite_arm64:2023-05-03
           image_additional_mb: 1024
           commands: |
             ls -al
