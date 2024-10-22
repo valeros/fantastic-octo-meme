@@ -160,7 +160,7 @@ fi
 # Pack everything into a tar.gz archive
 ARCHIVE_NAME="tool-dfuutil-${DFU_UTIL_VERSION}-${OS_NAME}-${ARCHITECTURE}.tar.gz"
 echo "Packing installed files into $ARCHIVE_NAME..."
-tar -czf "$ARCHIVE_NAME" -C "$INSTALL_BASE_PATH" "$(basename "$INSTALL_PATH")"
+tar -czf "/tmp/$ARCHIVE_NAME" -C "$INSTALL_BASE_PATH" "$(basename "$INSTALL_PATH")"
 if [ $? -ne 0 ]; then
   echo "Failed to create archive $ARCHIVE_NAME. Exiting."
   exit 1
