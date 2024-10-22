@@ -19,6 +19,8 @@ jobs:
             chmod +x ./build.sh
             ./build.sh
             ls -al
+      - name: Show local files
+        run: ls -al
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 90
