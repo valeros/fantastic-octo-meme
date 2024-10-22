@@ -1,0 +1,16 @@
+name: Build binary
+on: [push]
+
+jobs:
+  build-aarch64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pguyot/arm-runner-action@v2
+        id: build_image
+        with:
+          cpu: cortex-a53
+          base_image: raspios_lite_arm64
+          copy_artifact_path: simavr.tar.gz
+          image_additional_mb: 1024
+          commands: ./build.sh
