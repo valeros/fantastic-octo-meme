@@ -12,6 +12,7 @@ jobs:
           cpu: cortex-a53
           base_image: raspios_lite_arm64:2023-05-03
           image_additional_mb: 1024
+          bind_mount_repository: true
           commands: |
             ls -al
             sudo apt-get update
