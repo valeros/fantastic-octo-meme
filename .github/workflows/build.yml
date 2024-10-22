@@ -18,8 +18,9 @@ jobs:
             sudo apt-get install -y build-essential libudev-dev autoconf pkg-config patchelf
             chmod +x ./build.sh
             ./build.sh
+            ls -al
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 90
           name: linux-aarch64
-          path: tool-dfuutil-0.11-*-aarch64.tar.gz
+          path: ./tool-dfuutil-*.tar.gz
