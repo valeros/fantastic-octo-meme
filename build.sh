@@ -157,11 +157,13 @@ else
   exit 1
 fi
 
+# Navigate back to the original directory
+cd ..
+
 # Pack everything into a tar.gz archive
 ARCHIVE_NAME="tool-dfuutil-${DFU_UTIL_VERSION}-${OS_NAME}-${ARCHITECTURE}.tar.gz"
-ARCHIVE_PATH="$GITHUB_WORKSPACE/$ARCHIVE_NAME"
 echo "Packing installed files into $ARCHIVE_NAME..."
-tar -czf "$ARCHIVE_PATH" -C "$INSTALL_BASE_PATH" "$(basename "$INSTALL_PATH")"
+tar -czf "$ARCHIVE_NAME" -C "$INSTALL_BASE_PATH" "$(basename "$INSTALL_PATH")"
 if [ $? -ne 0 ]; then
   echo "Failed to create archive $ARCHIVE_NAME. Exiting."
   exit 1
@@ -175,6 +177,6 @@ ldd $DFU_UTIL_BIN
 echo "Prepared files:"
 ls -alR $INSTALL_PATH
 
-echo "All files have been packed into $ARCHIVE_PATH."
+echo "All files have been packed into $ARCHIVE_NAME."
 
 ls -al
