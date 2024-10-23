@@ -115,7 +115,7 @@ download_dfu_util() {
 }
 
 # Check if required applications are installed
-check_dependencies
+# check_dependencies
 
 # Call the function to install libusb dependency in the same folder as dfu-util
 install_libusb
@@ -172,7 +172,7 @@ fi
 echo "dfu-util downloaded, dependencies installed, dfu-util built, installed, and patched successfully!"
 
 echo "Library dependencies:"
-ldd $DFU_UTIL_BIN
+otool -L $DFU_UTIL_BIN
 
 echo "Prepared files:"
 ls -alR $INSTALL_PATH

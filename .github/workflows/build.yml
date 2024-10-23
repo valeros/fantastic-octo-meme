@@ -2,28 +2,43 @@ name: Build binary
 on: [push]
 
 jobs:
-  build-aarch64:
+  # build-linux-aarch64:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pguyot/arm-runner-action@v2
+  #       id: build_image
+  #       with:
+  #         cpu: cortex-a53
+  #         base_image: raspios_lite_arm64:2023-05-03
+  #         image_additional_mb: 1024
+  #         bind_mount_repository: true
+  #         commands: |
+  #           ls -al
+  #           sudo apt-get update
+  #           sudo apt-get install -y build-essential libudev-dev autoconf pkg-config patchelf
+  #           chmod +x ./build.sh
+  #           ./build.sh
+  #           ls -al
+  #     - name: Show local files
+  #       run: ls -al
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         retention-days: 90
+  #         name: linux-aarch64
+  #         path: tool-dfuutil-0.11-Linux-aarch64.tar.gz
+  build-macos-aarch64:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pguyot/arm-runner-action@v2
-        id: build_image
-        with:
-          cpu: cortex-a53
-          base_image: raspios_lite_arm64:2023-05-03
-          image_additional_mb: 1024
-          bind_mount_repository: true
-          commands: |
-            ls -al
-            sudo apt-get update
-            sudo apt-get install -y build-essential libudev-dev autoconf pkg-config patchelf
-            chmod +x ./build.sh
-            ./build.sh
-            ls -al
+      - name: Install dependencies
+        run: |
+          brew install autoconf patchelf pkg-config
       - name: Show local files
         run: ls -al
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 90
-          name: linux-aarch64
-          path: tool-dfuutil-0.11-Linux-aarch64.tar.gz
+          name: macos-aarch64
+          path: tool-dfuutil-0.11-macos-aarch64.tar.gz
+
