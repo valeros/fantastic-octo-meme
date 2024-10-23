@@ -144,6 +144,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Modify RPATH for dfu-util binary
+DFU_UTIL_BIN="$INSTALL_PATH/bin/dfu-util"
+
 if [ "$OS_NAME" == "Linux" ]; then
   echo "Patching $DFU_UTIL_BIN with patchelf for Linux..."
   patchelf --set-rpath '$ORIGIN/../lib/' "$DFU_UTIL_BIN"
