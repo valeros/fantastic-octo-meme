@@ -152,7 +152,6 @@ if [ "$OS_NAME" == "Linux" ]; then
   echo "RPATH set to '$ORIGIN/../lib/' in dfu-util binary."
 elif [ "$OS_NAME" == "Darwin" ]; then
   echo "Modifying RPATH using install_name_tool for macOS..."
-  install_name_tool --help
   install_name_tool -add_rpath "@loader_path/../lib" "$DFU_UTIL_BIN"
   if [ $? -ne 0 ]; then
     echo "Failed to modify dfu-util binary with install_name_tool. Exiting."
