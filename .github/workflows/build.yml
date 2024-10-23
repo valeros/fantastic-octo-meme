@@ -39,7 +39,7 @@ jobs:
       - name: Build package
         run: |
           chmod +x ./build.sh
-          ./build
+          ./build.sh
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 90
