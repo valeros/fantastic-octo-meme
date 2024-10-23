@@ -43,6 +43,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           retention-days: 90
-          name: macos-aarch64
-          path: tool-dfuutil-0.11-macos-aarch64.tar.gz
+          name: macos-arm64
+          path: tool-dfuutil-0.11-Darwin-arm64.tar.gz
 
