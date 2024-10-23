@@ -142,19 +142,22 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Use patchelf to set the RPATH to point to the lib folder relative to the binary's location
-DFU_UTIL_BIN="$INSTALL_PATH/bin/dfu-util"
-if [ -f "$DFU_UTIL_BIN" ]; then
-  echo "Patching $DFU_UTIL_BIN to add relative RPATH for libraries..."
+if [ "$OS_NAME" == "Linux" ]; then
+  echo "Patching $DFU_UTIL_BIN with patchelf for Linux..."
   patchelf --set-rpath '$ORIGIN/../lib/' "$DFU_UTIL_BIN"
   if [ $? -ne 0 ]; then
     echo "Failed to patch dfu-util binary with patchelf. Exiting."
     exit 1
   fi
   echo "RPATH set to '$ORIGIN/../lib/' in dfu-util binary."
-else
-  echo "dfu-util binary not found at $DFU_UTIL_BIN. Exiting."
-  exit 1
+elif [ "$OS_NAME" == "Darwin" ]; then
+  echo "Modifying RPATH using install_name_tool for macOS..."
+  install_name_tool -add_rpath "@loader_path/../lib" "$DFU_UTIL_BIN"
+  if [ $? -ne 0 ]; then
+    echo "Failed to modify dfu-util binary with install_name_tool. Exiting."
+    exit 1
+  fi
+  echo "RPATH set to '@loader_path/../lib' in dfu-util binary."
 fi
 
 # Navigate back to the original directory
