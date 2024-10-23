@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 # Variables
 DFU_UTIL_VERSION="0.11"
 DFU_UTIL_TAR="dfu-util-${DFU_UTIL_VERSION}.tar.gz"
