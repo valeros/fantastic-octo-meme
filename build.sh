@@ -188,3 +188,9 @@ ls -alR $INSTALL_PATH
 echo "All files have been packed into $ARCHIVE_NAME."
 
 ls -al
+
+# Test the binaries
+
+mv $INSTALL_PATH ~/relocated-package
+otool -L ~/relocated-package/bin/dfu-util
+~/relocated-package/bin/dfu-util --help
