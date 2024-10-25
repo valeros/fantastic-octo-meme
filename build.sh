@@ -154,15 +154,22 @@ if [ "$OS_NAME" == "Linux" ]; then
   fi
   echo "RPATH set to '$ORIGIN/../lib/' in dfu-util binary."
 elif [ "$OS_NAME" == "Darwin" ]; then
-  echo "Modifying RPATH using install_name_tool for macOS..."
-  echo "Previous libraries":
-  otool -L $DFU_UTIL_BIN
-  install_name_tool -add_rpath "@loader_path/../lib" "$DFU_UTIL_BIN"
-  if [ $? -ne 0 ]; then
-    echo "Failed to modify dfu-util binary with install_name_tool. Exiting."
+  echo "Modifying library path using install_name_tool for macOS..."
+
+  LIBUSB_DYLIB="$INSTALL_PATH/lib/libusb-1.0.0.dylib"
+
+  if [ -f "$LIBUSB_DYLIB" ]; then
+    # Change the reference to libusb to use a relative path from the dfu-util binary location
+    install_name_tool -change "$LIBUSB_DYLIB" "@loader_path/../lib/libusb-1.0.0.dylib" "$DFU_UTIL_BIN"
+    if [ $? -ne 0 ]; then
+      echo "Failed to modify dfu-util binary with install_name_tool. Exiting."
+      exit 1
+    fi
+    echo "Library path set to '@loader_path/../lib/libusb-1.0.0.dylib' in dfu-util binary."
+  else
+    echo "Error: Expected libusb library at $LIBUSB_DYLIB not found."
     exit 1
   fi
-  echo "RPATH set to '@loader_path/../lib' in dfu-util binary."
 fi
 
 # Navigate back to the original directory
