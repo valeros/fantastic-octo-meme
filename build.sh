@@ -163,6 +163,8 @@ elif [ "$OS_NAME" == "Darwin" ]; then
   if [ -f "$LIBUSB_DYLIB" ]; then
     # Change the reference to libusb to use a relative path from the dfu-util binary location
     install_name_tool -change "$LIBUSB_DYLIB" "@loader_path/../lib/libusb-1.0.0.dylib" "$DFU_UTIL_BIN"
+    install_name_tool -change "$LIBUSB_DYLIB" "@loader_path/../lib/libusb-1.0.0.dylib" "$DFU_SUFFIX_BIN"
+    install_name_tool -change "$LIBUSB_DYLIB" "@loader_path/../lib/libusb-1.0.0.dylib" "$DFU_PREFIX_BIN"
     if [ $? -ne 0 ]; then
       echo "Failed to modify dfu-util binary with install_name_tool. Exiting."
       exit 1
