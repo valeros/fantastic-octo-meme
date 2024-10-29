@@ -142,8 +142,10 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Modify RPATH for dfu-util binary
+# Modify RPATH for dfu-util binaries
 DFU_UTIL_BIN="$INSTALL_PATH/bin/dfu-util"
+DFU_SUFFIX_BIN="$INSTALL_PATH/bin/dfu-suffix"
+DFU_PREFIX_BIN="$INSTALL_PATH/bin/dfu-prefix"
 
 if [ "$OS_NAME" == "Linux" ]; then
   echo "Patching $DFU_UTIL_BIN with patchelf for Linux..."
@@ -186,8 +188,14 @@ fi
 
 echo "dfu-util downloaded, dependencies installed, dfu-util built, installed, and patched successfully!"
 
-echo "Library dependencies:"
+echo "Library dependencies dfu-util:"
 otool -L $DFU_UTIL_BIN
+
+echo "Library dependencies dfu-suffix:"
+otool -L $DFU_SUFFIX_BIN
+
+echo "Library dependencies dfu-prefix:"
+otool -L $DFU_PREFIX_BIN
 
 echo "Prepared files:"
 ls -alR $INSTALL_PATH
@@ -201,3 +209,9 @@ ls -al
 mv $INSTALL_PATH ~/relocated-package
 otool -L ~/relocated-package/bin/dfu-util
 ~/relocated-package/bin/dfu-util --help
+
+otool -L ~/relocated-package/bin/dfu-suffix
+~/relocated-package/bin/dfu-suffix --help
+
+otool -L ~/relocated-package/bin/dfu-prefix
+~/relocated-package/bin/dfu-prefix --help
